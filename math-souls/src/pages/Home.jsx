@@ -15,18 +15,24 @@ const Home = ({ setAuth }) => {
 
   const [greeting, setGreeting] = useState("");
 
-  useEffect(() => {
-    setAuth(true);
-
-    // Selecting a random greeting
-    setGreeting(greetingList[Math.floor(Math.random() * greetingList.length)]);
-    if (Math.random() * 100 >= 99) {
-      setGreeting(secretGreeting);
-    }
-  }, []);
-
   // hooks
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is logged in
+    if (localStorage.getItem("userID") == null) {
+      // Redirect to login if not authenticated
+      navigate("/login");
+    } else {
+      setAuth(true);
+
+      // Selecting a random greeting
+      setGreeting(greetingList[Math.floor(Math.random() * greetingList.length)]);
+      if (Math.random() * 100 >= 99) {
+        setGreeting(secretGreeting);
+      }
+    }
+  }, [navigate]);
 
   function handleClick() {
     navigate("/question");

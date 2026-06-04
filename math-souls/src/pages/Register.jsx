@@ -57,12 +57,6 @@ const Register = () => {
         <input
           className="login-input-field"
           type="text"
-          placeholder="Username..."
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <input
-          className="login-input-field"
-          type="text"
           placeholder="Email..."
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -71,6 +65,12 @@ const Register = () => {
           type="password"
           placeholder="Password..."
           onChange={(event) => setPassword(event.target.value)}
+        /><br />
+        <input
+          className="login-input-field"
+          type="text"
+          placeholder="Username..."
+          onChange={(event) => setUsername(event.target.value)}
         />
       </div>
       <button className="login-button" onClick={handleSignUp}>

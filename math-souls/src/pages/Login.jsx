@@ -44,7 +44,7 @@ const Login = () => {
 
       navigate("/");
     } else {
-      alert("One field is empty");
+      alert("Please enter a valid email and password");
     }
   };
 
