@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { supabase } from "../supabase";
 import "./Home.css";
 import { buttonBackground } from "../assets";
 
@@ -19,20 +20,32 @@ const Home = ({ setAuth }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
-    if (localStorage.getItem("userID") == null) {
-      // Redirect to login if not authenticated
-      navigate("/login");
-    } else {
-      setAuth(true);
+    getUser();
+  }, [navigate, setAuth]);
 
-      // Selecting a random greeting
-      setGreeting(greetingList[Math.floor(Math.random() * greetingList.length)]);
-      if (Math.random() * 100 >= 99) {
-        setGreeting(secretGreeting);
+  const getUser = async () => {
+    // Check if user is logged in
+    try {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      if (user == null) {
+        // Redirect to login if not authenticated
+        console.log("No user logged in, redirecting to login page.");
+        navigate("/login");
+      } else {
+        setAuth(true);
+  
+        // Selecting a random greeting
+        setGreeting(greetingList[Math.floor(Math.random() * greetingList.length)]);
+        if (Math.random() * 100 >= 99) {
+          setGreeting(secretGreeting);
+        }
       }
+    } catch (error) {
+      console.error('Error fetching user:', error);
     }
-  }, [navigate]);
+  };
 
   function handleClick() {
     navigate("/question");

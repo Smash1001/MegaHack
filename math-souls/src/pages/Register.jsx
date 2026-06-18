@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { supabase } from "../supabase";
 import { buttonBackground } from "../assets/index";
@@ -12,47 +12,44 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    console.log(user);
-
-    if (user.id != null) {
-      navigate("/");
-    }
-  };
-
   const handleSignUp = async () => {
     if (email.includes("@") == false) {
       alert("Invalid Email.");
-    } else if (password.length <= 5) {
+      return;
+    } if (password.length <= 5) {
       alert("Password must be at least 6 characters.");
+      return;
+    } 
+
+    //Create user in auth and database
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+          data: {
+            username: username,
+        },
+      },
+    });
+
+    // Insert user data into "Users" table
+    const { data: Users, error: UsersError } = await supabase
+      .from("Users")
+      .insert([{username: username, email: email }]);
+
+
+    if (UsersError) {
+      console.error('Sign up error:', UsersError);
     } else {
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
-
-      const { data: Users, error: UsersError } = await supabase
-        .from("Users")
-        .insert([{ userID: data.user.id, username: username, email: email }])
-        .select();
-
-      localStorage.setItem("userID", data.user.id);
-
-      navigate("/");
+      console.log('User created successfully:', data);
     }
+
+    navigate("/RegisterConfirm");
   };
 
   return (
     <div className="login-container">
-      <div className="login-title">Welcome, Traveler.</div>
+      <div className="login-title">Welcome, new one...</div>
       <div className="login-input-container">
         <input
           className="login-input-field"
@@ -81,6 +78,9 @@ const Register = () => {
         />
         <div className="login-button-text">Join</div>
       </button>
+      <Link className="sign-up-link" to="/Login">
+        Return to Login
+      </Link>
     </div>
   );
 };

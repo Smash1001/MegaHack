@@ -11,6 +11,7 @@ import Gauntlet from "./pages/Gauntlet";
 import Endless from "./pages/endless";
 import SecretBenson from "./pages/SecretBenson";
 import BossList from "./pages/BossList";
+import RegisterConfirm from "./pages/RegisterConfirm";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -47,6 +48,7 @@ function App() {
           path="bossList"
           element={<BossList setUserUpdate={setUserUpdate} />}
         />
+        <Route path="/RegisterConfirm" element={<RegisterConfirm />} />
       </Routes>
     </BrowserRouter>
   );

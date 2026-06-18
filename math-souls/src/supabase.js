@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase instance
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_API_KEY
-);
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+
+// Create a single supabase client instance to use across your app
+export const supabase = createClient(supabaseUrl, supabasePublishableKey)

@@ -21,12 +21,13 @@ const Login = () => {
         data: { user },
       } = await supabase.auth.getUser();
       if (user == null) {
-        console.log("no user logged in");
+        console.log('No user logged in');
       } else {
+        console.log("user logged in: ", user);
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching user:', error);
     }
   };
 
@@ -38,11 +39,12 @@ const Login = () => {
         password: password,
       });
       if (error) {
-        alert("Incorrect Email or Password");
+        console.error('Sign in error:', error);
+      } else {
+        localStorage.setItem("userID", data.user.id);
+        localStorage.setItem("email", email);
+        navigate("/");
       }
-      localStorage.setItem("userID", data.user.id);
-
-      navigate("/");
     } else {
       alert("Please enter a valid email and password");
     }
@@ -50,7 +52,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="login-title">You've Returned...</div>
+      <div className="login-title">Welcome to MathSouls</div>
       <div className="login-input-container">
         <input
           className="login-input-field"

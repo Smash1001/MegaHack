@@ -17,18 +17,23 @@ const Navbar = ({ setAuth, userUpdate }) => {
   }, [userUpdate]);
 
   const fetchUser = async () => {
-    let { data: user, error } = await supabase
-      .from("Users")
-      .select("*")
-      .eq("userID", localStorage.getItem("userID"));
+    let { data: Users, error } = await supabase
+      .from('Users')
+      .select('*')
+      .eq('email', localStorage.getItem("email"));
 
-    // console.log(user[0]);
-    setUserData(user[0]);
+    if (error) {
+      console.error('Error fetching user data:', error);
+      return;
+    }
+    console.log("Fetched user data:", Users);
+    setUserData(Users[0]);
   };
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
     localStorage.removeItem("userID");
+    localStorage.removeItem("email");
     setAuth(false);
     navigate("/login");
   };
