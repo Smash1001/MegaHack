@@ -12,14 +12,22 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 
     color: black;
 }
 
+.navbar-right-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+    padding-right: 30px;
+}
+
 .navbar-souls-container {
-    padding-left: 50px;
     font-size: 26px;
 }
 
@@ -29,8 +37,15 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    padding-right: 30px;
     font-size: 26px;
+}
+
+.username-level-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    justify-content: center;
+    text-align: right;
 }
 
 .navbar-pfp {
@@ -61,6 +76,19 @@
     animation-duration: 0.2s;
 }
 
+.navbar-level-text {
+    font-size: 14px;
+}
+
+.navbar-signout-text {
+    padding: 10px 0;
+}
+
+.navbar-signout-text:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 @keyframes signOutFadeIn {
     0% {
         opacity: 0;
@@ -68,9 +96,4 @@
     100% {
         opacity: 1;
     }
-}
-
-.navbar-signout-text:hover {
-    text-decoration: underline;
-    cursor: pointer;
 }

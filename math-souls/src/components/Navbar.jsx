@@ -41,15 +41,20 @@ const Navbar = ({ setAuth, userUpdate }) => {
   return (
     <div className="navbar-container">
       <div className="navbar-top-container">
-        <div className="navbar-souls-container">Souls: {userData.souls}</div>
-        <div className="username-pfp-container">
-          <div>{userData.username}</div>
-          <img
-            src={knightPFP}
-            alt="knightPFP"
-            className="navbar-pfp"
-            onClick={() => setToggleSignOut(!toggleSignOut)}
-          />
+        <div className="navbar-right-container">
+          <div className="navbar-souls-container">Souls: {userData.souls}</div>
+          <div className="username-pfp-container">
+            <div className="username-level-wrapper">
+              <div>{userData.username}</div>
+              <div className="navbar-level-text">Lv: {userData.level}</div>
+            </div>
+            <img
+              src={knightPFP}
+              alt="knightPFP"
+              className="navbar-pfp"
+              onClick={() => setToggleSignOut(!toggleSignOut)}
+            />
+          </div>
         </div>
       </div>
       {toggleSignOut && (
