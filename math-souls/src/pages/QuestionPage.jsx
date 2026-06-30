@@ -32,7 +32,7 @@ const QuestionPage = ({ setUserUpdate }) => {
             setQuestion('What is 2 + 2?');
     setCorrectAnswer(4);
     setQuestionType('Basic Math');
-        const response = await axios.get('http://localhost:5000/question/', {
+        const response = await axios.get('http://localhost:5173/question/', {
           params: { category: category || 'basic_math' },
         });
         console.log(response.data.problem);
@@ -54,17 +54,18 @@ const QuestionPage = ({ setUserUpdate }) => {
   const checkAlgebraDefeated = async () => {
     try {
       const userID = localStorage.getItem("userID");
+      const email = localStorage.getItem("email");
       const { data: userData, error: fetchError } = await supabase
         .from('Users')
         .select('algebraDefeated')
-        .eq('userID', userID)
+        .eq('email', email)
         .single();
 
       if (fetchError) throw fetchError;
 
       setAlgebraDefeated(userData.algebraDefeated);
     } catch (error) {
-      console.error('Error fetching algebraDefeated status:', error);
+      console.error('Error fetching algebraDefeated status: ', error);
     }
   };
 
