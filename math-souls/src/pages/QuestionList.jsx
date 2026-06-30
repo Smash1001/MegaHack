@@ -9,17 +9,18 @@ const QuestionList = () => {
   useEffect(()=>{
     const fetchSouls = async ()=> { try {
     const userID = localStorage.getItem("userID");
+    const email = localStorage.getItem("email");
     if (!userID) throw new Error ("No User ID");
   
     const {data, error}= await supabase
       .from('Users')
       .select('souls')
-      .eq('userID', userID)
+      .eq('email', email)
       .single();
     setSouls(data.souls);
     }
     catch(error){
-      console.error("Error fetching sould:", error)
+      console.error("Error fetching souls:", error)
     }}   
     fetchSouls();
   },[]);
